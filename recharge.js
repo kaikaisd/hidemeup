@@ -2,16 +2,6 @@
  * 繳費充值
  */
 CommonUtils.regNamespace("recharge", "index");
-/**
- * 服务密码登录成功后跳转到缴费记录页面
- * @private
- */
-var _afterLogin = function() {
-    var loadIndex3 = layer.load(1, {
-        shade: [0.3, '#000']
-    });
-    window.location.href = contextPath + "/payRecharge/payrecordIndex?timestamp=" + commonTools.getTimestamp();
-};
 recharge.index = (function() {
     var _checkPhone = function() {
         var loadIndex = layer.load(1, {
@@ -101,14 +91,14 @@ recharge.index = (function() {
                 $("#erroMsg").html(msgData.payMoneyErro);
                 $("#payMoney").addClass("error");
                 return;
-            } else if (0 > Number(payMoney)) { //exclude payMoneyMinLimit
+            } else if (0 > Number(payMoney)) {
                 $("#erroMsg").html(msgData.payMoneyMinLimit);
                 $("#payMoney").addClass("error");
                 return;
             }
             $("#payMoneyData").val(payMoney);
             param.mustPayMoney = $("#dataForm input[name='mustPayMoney']").val(); //增加必缴金额
-        } else if (userType == "99") { //original 23
+        } else if (userType == "99") {
             var payMoney = $("#payMoney li[class='active']").attr("money-num");
             payMoney = $.trim(payMoney);
             if (payMoney == null || payMoney == undefined || payMoney == "") {
@@ -260,7 +250,3 @@ recharge.index = (function() {
         goRechargeRecord: _goRechargeRecord
     };
 })();
-$(function() {
-    //登录成功后回调函数
-    loginTools.afterLogin = _afterLogin;
-});
